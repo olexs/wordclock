@@ -8,7 +8,7 @@ class SentenceGenerator:
         25: ["fünf", "vor", "halb"],
         30: ["halb"],
         35: ["fünf", "nach", "halb"],
-        40: ["zwangig", "vor"],
+        40: ["zwanzig", "vor"],
         45: ["viertel", "vor"],
         50: ["zehn", "vor"],
         55: ["fünf", "vor"],
@@ -42,4 +42,3 @@ class SentenceGenerator:
         hours = [self.hours[hoursRounded]]
 
         return self.prefix + minutes + hours
-        
