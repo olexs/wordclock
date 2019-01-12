@@ -47,20 +47,20 @@ class TerminalDisplay:
 
     colors = {
         (0, 0, 0): colorama.Fore.BLACK,
-        (255, 0, 0): colorama.Fore.RED,
-        (0, 255, 0): colorama.Fore.GREEN,
-        (0, 0, 255): colorama.Fore.BLUE,
-        (255, 255, 0): colorama.Fore.YELLOW,
-        (0, 255, 255): colorama.Fore.CYAN,
-        (255, 0, 255): colorama.Fore.MAGENTA,
+        (128, 0, 0): colorama.Fore.RED,
+        (0, 128, 0): colorama.Fore.GREEN,
+        (0, 0, 128): colorama.Fore.BLUE,
+        (128, 128, 0): colorama.Fore.YELLOW,
+        (0, 128, 128): colorama.Fore.CYAN,
+        (128, 0, 128): colorama.Fore.MAGENTA,
         (255, 255, 255): colorama.Fore.WHITE,
         (128, 128, 128): colorama.Fore.LIGHTBLACK_EX,
-        (128, 0, 0): colorama.Fore.LIGHTRED_EX,
-        (0, 128, 0): colorama.Fore.LIGHTGREEN_EX,
-        (0, 0, 128): colorama.Fore.LIGHTBLUE_EX,
-        (128, 128, 0): colorama.Fore.LIGHTYELLOW_EX,
-        (0, 128, 128): colorama.Fore.LIGHTCYAN_EX,
-        (128, 0, 128): colorama.Fore.LIGHTMAGENTA_EX
+        (255, 0, 0): colorama.Fore.LIGHTRED_EX,
+        (0, 255, 0): colorama.Fore.LIGHTGREEN_EX,
+        (0, 0, 255): colorama.Fore.LIGHTBLUE_EX,
+        (255, 255, 0): colorama.Fore.LIGHTYELLOW_EX,
+        (0, 255, 255): colorama.Fore.LIGHTCYAN_EX,
+        (255, 0, 255): colorama.Fore.LIGHTMAGENTA_EX
     }
 
     color = (250, 0, 0)
