@@ -1,5 +1,6 @@
 import colorama
 import os
+import math
 
 class TerminalDisplay:
 
@@ -44,9 +45,25 @@ class TerminalDisplay:
         "uhr":          [9, [8, 3]]
     }
 
-    CRED = '\033[91m'
-    CGREY = '\33[90m'
-    CEND = '\033[0m'
+    colors = {
+        (0, 0, 0): colorama.Fore.BLACK,
+        (255, 0, 0): colorama.Fore.RED,
+        (0, 255, 0): colorama.Fore.GREEN,
+        (0, 0, 255): colorama.Fore.BLUE,
+        (255, 255, 0): colorama.Fore.YELLOW,
+        (0, 255, 255): colorama.Fore.CYAN,
+        (255, 0, 255): colorama.Fore.MAGENTA,
+        (255, 255, 255): colorama.Fore.WHITE,
+        (128, 128, 128): colorama.Fore.LIGHTBLACK_EX,
+        (128, 0, 0): colorama.Fore.LIGHTRED_EX,
+        (0, 128, 0): colorama.Fore.LIGHTGREEN_EX,
+        (0, 0, 128): colorama.Fore.LIGHTBLUE_EX,
+        (128, 128, 0): colorama.Fore.LIGHTYELLOW_EX,
+        (0, 128, 128): colorama.Fore.LIGHTCYAN_EX,
+        (128, 0, 128): colorama.Fore.LIGHTMAGENTA_EX
+    }
+
+    color = (250, 0, 0)
 
     def init(self):
         colorama.init()
@@ -69,17 +86,25 @@ class TerminalDisplay:
     def show_leds(self, leds):
         self.clear_screen()
         print('') # empty line at start
+        color = self.get_closest_color(self.color)
         line_index = 0
         for line in self.display:
             letter_index = 0
             for letter in line:
                 led_index = line_index * self.linelength + letter_index
-                toprint = (self.CRED if led_index in leds else self.CGREY) + letter + self.CEND
+                toprint = (color if led_index in leds else colorama.Fore.LIGHTBLACK_EX) + letter + '\033[0m'
                 print(toprint, end=' ')
                 letter_index = letter_index + 1
             line_index = line_index + 1
             print('') # line end
         print('') # output end
+
+    def get_closest_color(self, color):
+        sorted_colors = sorted(self.colors, key = self.get_color_distance)
+        return self.colors[sorted_colors[0]]
+
+    def get_color_distance(self, x):
+        return math.sqrt(sum([(a - b) ** 2 for a, b in zip(x, self.color)]))
 
     def clear_screen(self):
         if os.name == 'nt':
