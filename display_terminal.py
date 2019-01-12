@@ -1,7 +1,7 @@
 import colorama
 import os
 
-class TestDisplay:
+class TerminalDisplay:
 
     display = [
         "ESKISTLFÜNF",

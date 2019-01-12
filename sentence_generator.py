@@ -1,6 +1,6 @@
 class SentenceGenerator:
     minutes = {
-        0:  ["uhr"],
+        0:  [],
         5:  ["fünf", "nach"],
         10: ["zehn", "nach"],
         15: ["viertel", "nach"],
@@ -12,7 +12,7 @@ class SentenceGenerator:
         45: ["viertel", "vor"],
         50: ["zehn", "vor"],
         55: ["fünf", "vor"],
-        60: ["uhr"]
+        60: []
     }
 
     hours = {
@@ -30,6 +30,8 @@ class SentenceGenerator:
         11: "elf"
     }
 
+    uhr = "uhr"
+
     prefix = ["es", "ist"]
 
     def get_sentence(self, time):
@@ -41,4 +43,6 @@ class SentenceGenerator:
             hoursRounded = (hoursRounded + 1) % 12
         hours = [self.hours[hoursRounded]]
 
-        return self.prefix + minutes + hours
+        postfix = [self.uhr] if minutesRounded in [0, 60] else []
+
+        return self.prefix + minutes + hours + postfix

@@ -1,12 +1,12 @@
 import datetime
 import time
 
-from test_display import TestDisplay
+from display_terminal import TerminalDisplay
 from sentence_generator import SentenceGenerator
 
 generator = SentenceGenerator()
 
-display = TestDisplay()
+display = TerminalDisplay()
 display.init()
 
 while True:
