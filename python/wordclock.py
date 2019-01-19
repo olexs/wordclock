@@ -1,16 +1,21 @@
 import datetime
 import time
 import threading
+import os
 import sys
 from flask import Flask, render_template, jsonify, request
-from display_terminal import TerminalDisplay
-from display_neopixel import NeopixelDisplay
+
+if (os.name == 'nt'):
+    from display_terminal import TerminalDisplay as Display
+else:
+    from display_neopixel import NeopixelDisplay as Display
+
 from sentence_generator import SentenceGenerator
 
 # ----- Wordclock display handling -----
 
 generator = SentenceGenerator()
-display = TerminalDisplay()
+display = Display()
 
 display.init()
 
