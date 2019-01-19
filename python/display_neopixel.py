@@ -77,7 +77,7 @@ class NeopixelDisplay:
                 led_index = (line_index * self.linelength) + letter_index
                 led_color = self.color if led_index in leds else (0, 0, 0)
                 if self.lines_in_z_order and line_index % 2 == 1: # every second line inverted in hardware
-                    led_index = (line_index * self.linelength) + (self.linelength - letter_index)
+                    led_index = (line_index * self.linelength) + (self.linelength - letter_index - 1)
                 self.pixels[led_index] = led_color
                 letter_index = letter_index + 1
             line_index = line_index + 1
