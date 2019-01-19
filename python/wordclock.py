@@ -4,6 +4,7 @@ import threading
 import sys
 from flask import Flask, render_template, jsonify, request
 from display_terminal import TerminalDisplay
+from display_neopixel import NeopixelDisplay
 from sentence_generator import SentenceGenerator
 
 # ----- Wordclock display handling -----
