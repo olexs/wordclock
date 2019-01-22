@@ -1,8 +1,9 @@
 import math
-import board
-import neopixel
 
 class NeopixelDisplay:
+
+    def __init__(self, driver):
+        self.pixels = driver.get_pixels()
 
     display = [
         "ESKISTLFÜNF",
@@ -20,8 +21,7 @@ class NeopixelDisplay:
     lines_in_z_order = True
 
     linelength = len(display[0])
-    led_count = linelength * len(display)
-
+    
     words = {
         "es":           [0, [0, 2]],
         "ist":          [0, [3, 3]],
@@ -51,7 +51,7 @@ class NeopixelDisplay:
     color = (32, 0, 0)
 
     def init(self):
-        self.pixels = neopixel.NeoPixel(board.D18, self.led_count)
+        pass
         # todo: light up all LEDs
 
     def show_sentence(self, sentence):

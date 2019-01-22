@@ -6,16 +6,19 @@ import sys
 from flask import Flask, render_template, jsonify, request
 
 if (os.name == 'nt'):
-    from display_terminal import TerminalDisplay as Display
+    from display_terminal import TerminalDisplay
+    display = TerminalDisplay()
 else:
-    from display_neopixel import NeopixelDisplay as Display
+    from display_driver import NeopixelDriver
+    from display_neopixel import NeopixelDisplay
+    display = NeopixelDisplay(NeopixelDriver())
 
 from sentence_generator import SentenceGenerator
 
 # ----- Wordclock display handling -----
 
 generator = SentenceGenerator()
-display = Display()
+
 
 display.init()
 
