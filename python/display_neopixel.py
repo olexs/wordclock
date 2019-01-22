@@ -3,7 +3,7 @@ import math
 class NeopixelDisplay:
 
     def __init__(self, driver):
-        self.pixels = driver.get_pixels()
+        self.driver = driver
 
     display = [
         "ESKISTLFÜNF",
@@ -51,34 +51,21 @@ class NeopixelDisplay:
     color = (32, 0, 0)
 
     def init(self):
-        pass
+        pass        
         # todo: light up all LEDs
 
     def show_sentence(self, sentence):
-        leds = self.get_led_sequence(sentence)
-        self.show_leds(leds)
-
-    def get_led_sequence(self, sentence):
-        leds = []
+        self.set_led_sequence(sentence)
+        
+    def set_led_sequence(self, sentence):
+        self.driver.fill((0,0,0))
         for word in sentence:
-            line_index = self.words[word][0]
-            word_start = self.words[word][1][0]
-            word_length = self.words[word][1][1]
-            range_start = line_index * self.linelength + word_start
+            [line_index, [word_start, word_length]] = self.words[word]
+            range_start = line_index * self.linelength
+            if line_index % 2 == 0 or not self.lines_in_z_order:
+                range_start = range_start + word_start
+            else:
+                range_start = range_start + self.linelength - (word_start + word_length)
             range_end = range_start + word_length
-            leds = leds + list(range(range_start, range_end))
-        return leds
-
-    def show_leds(self, leds):
-        line_index = 0
-        for line in self.display:
-            letter_index = 0
-            for _ in line:
-                led_index = (line_index * self.linelength) + letter_index
-                led_color = self.color if led_index in leds else (0, 0, 0)
-                if self.lines_in_z_order and line_index % 2 == 1: # every second line inverted in hardware
-                    led_index = (line_index * self.linelength) + (self.linelength - letter_index - 1)
-                self.pixels[led_index] = led_color
-                letter_index = letter_index + 1
-            line_index = line_index + 1
-            
+            self.driver.set_value(range_start, range_end, self.color)
+        self.driver.show()

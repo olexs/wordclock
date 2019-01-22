@@ -39,8 +39,14 @@ class MockDriver:
     def __init__(self):
         self.pixels = [None] * 110
 
-    def get_pixels(self):
-        return self.pixels
+    def show(self):
+        pass
+
+    def fill(self, color):
+        self.pixels = [color] * 110
+
+    def set_value(self, start, end, color):
+        self.pixels[start:end] = [color] * (end - start)
 
 if __name__ == '__main__':
     unittest.main()
