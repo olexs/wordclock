@@ -3,6 +3,7 @@ import time
 import threading
 import os
 import sys
+import signal
 from flask import Flask, render_template, jsonify, request
 
 if (os.name == 'nt'):
@@ -15,10 +16,30 @@ else:
 
 from sentence_generator import SentenceGenerator
 
+# ----- SIGTERM handling -----
+
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+class GracefulKiller:
+  kill_now = False
+
+  def __init__(self):
+    signal.signal(signal.SIGINT, self.exit_gracefully)
+    signal.signal(signal.SIGTERM, self.exit_gracefully)
+
+  def exit_gracefully(self,signum, frame):
+    self.kill_now = True
+    shutdown_server()
+
+killer = GracefulKiller()
+
 # ----- Wordclock display handling -----
 
 generator = SentenceGenerator()
-
 
 display.init()
 
@@ -29,11 +50,9 @@ def refresh_display():
     display.show_sentence(sentence)
 
 def timed_refresh():
-    try:
+    if not killer.kill_now:
         refresh_display()
         threading.Timer(5.0, timed_refresh).start()
-    except KeyboardInterrupt:
-        sys.exit()
 
 timed_refresh()
 
