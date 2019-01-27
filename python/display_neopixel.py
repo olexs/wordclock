@@ -48,11 +48,10 @@ class NeopixelDisplay:
         "uhr":          [9, [8, 3]]
     }
 
-    color = (32, 0, 0)
+    color = (255, 0, 0)
 
     def init(self):
-        pass        
-        # todo: light up all LEDs
+        pass
 
     def show_sentence(self, sentence):
         self.set_led_sequence(sentence)

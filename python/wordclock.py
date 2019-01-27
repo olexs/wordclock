@@ -9,10 +9,12 @@ from flask import Flask, render_template, jsonify, request
 if (os.name == 'nt'):
     from display_terminal import TerminalDisplay
     display = TerminalDisplay()
+    file_location = ""
 else:
     from display_driver import NeopixelDriver
     from display_neopixel import NeopixelDisplay
     display = NeopixelDisplay(NeopixelDriver())
+    file_location = "/home/pi/wordclock/"
 
 from sentence_generator import SentenceGenerator
 
@@ -37,11 +39,30 @@ class GracefulKiller:
 
 killer = GracefulKiller()
 
+# ----- Saving color value in file -----
+
+def init_color():
+    try:
+        configfile = open(file_location + "color.txt", "r")
+        r = int(configfile.readline())
+        g = int(configfile.readline())
+        b = int(configfile.readline())
+        display.color = (r, g, b)
+        configfile.close()
+    except:
+        print("Error while loading saved color")
+
+def save_color(color):
+    configfile = open(file_location + "color.txt", "w")
+    configfile.writelines(str(x) + '\n' for x in color)
+    configfile.close()
+
 # ----- Wordclock display handling -----
 
 generator = SentenceGenerator()
 
 display.init()
+init_color()
 
 def refresh_display():
     now = datetime.datetime.now().time()
@@ -70,6 +91,7 @@ def set_color():
     g = int(request.args.get('g'))
     b = int(request.args.get('b'))
     display.color = (r, g, b)
+    save_color(display.color)
     refresh_display()
     return jsonify(success=True)
 
