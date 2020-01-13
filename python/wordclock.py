@@ -4,7 +4,7 @@ import threading
 import os
 import sys
 import signal
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, send_from_directory, jsonify, request
 
 if (os.name == 'nt'):
     from display_terminal import TerminalDisplay
@@ -79,11 +79,15 @@ timed_refresh()
 
 # ----- Remote controller application -----
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, static_folder='frontend')
 
 @app.route('/')
-def remote():
-    return render_template('remote.html')
+def get_index():
+    return app.send_static_file('index.html')
+
+@app.route('/<path:path>')
+def get_static(path):
+    return send_from_directory('frontend', path)
 
 @app.route('/setcolor', methods=['POST'])
 def set_color():
@@ -95,5 +99,9 @@ def set_color():
     refresh_display()
     return jsonify(success=True)
 
+@app.route('/getcolor', methods=['GET'])
+def get_color():
+    return jsonify(r=display.color[0], g=display.color[1], b=display.color[2])
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=80)

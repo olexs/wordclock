@@ -63,7 +63,7 @@ class TerminalDisplay:
         (255, 0, 255): colorama.Fore.LIGHTMAGENTA_EX
     }
 
-    color = (250, 0, 0)
+    color = (0, 128, 0)
 
     def init(self):
         colorama.init()
