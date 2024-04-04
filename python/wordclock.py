@@ -99,7 +99,8 @@ def on_connect(client, userdata, flags, rc, properties):
         "brightness": True,
         "rgb": True,
         "supported_color_modes": ["rgb"],
-        "schema": "json"
+        "schema": "json",
+        "unique_id": "wordclock"
     }), retain=True)
     client.subscribe(light_command_topic)
 
