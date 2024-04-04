@@ -84,7 +84,7 @@ class TerminalDisplay:
         return leds
 
     def show_leds(self, leds):
-        self.clear_screen()
+        # self.clear_screen()
         print('') # empty line at start
         color = self.get_closest_color(self.color)
         line_index = 0
