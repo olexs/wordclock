@@ -13,6 +13,8 @@ class SentenceGeneratorTests(unittest.TestCase):
         self.assertEqual('es ist zwölf uhr'.split(' '), gen.get_sentence(time(0, 0)))
         self.assertEqual('es ist sechs uhr'.split(' '), gen.get_sentence(time(6, 0)))
         self.assertEqual('es ist sechs uhr'.split(' '), gen.get_sentence(time(18, 0)))
+        self.assertEqual('es ist ein uhr'.split(' '), gen.get_sentence(time(1, 0)))
+        self.assertEqual('es ist ein uhr'.split(' '), gen.get_sentence(time(13, 0)))
         self.assertEqual('es ist fünf nach eins'.split(' '), gen.get_sentence(time(1, 5)))
         self.assertEqual('es ist zehn nach zwei'.split(' '), gen.get_sentence(time(2, 11)))
         self.assertEqual('es ist viertel nach drei'.split(' '), gen.get_sentence(time(3, 14)))

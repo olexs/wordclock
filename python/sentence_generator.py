@@ -41,8 +41,13 @@ class SentenceGenerator:
         hoursRounded = time.hour % 12
         if minutesRounded >= 25:
             hoursRounded = (hoursRounded + 1) % 12
-        hours = [self.hours[hoursRounded]]
+        
+        hour = self.hours[hoursRounded]
+        if hour == 'eins' and minutesRounded in [0, 60]:
+            hour = 'ein'
 
+        hours = [hour]
+        
         postfix = [self.uhr] if minutesRounded in [0, 60] else []
 
         return self.prefix + minutes + hours + postfix

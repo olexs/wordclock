@@ -35,6 +35,7 @@ class NeopixelDisplay:
         "halb":         [4, [0, 4]],
         "zwölf":        [4, [5, 5]],
         "zwei":         [5, [0, 4]],
+        "ein":          [5, [2, 3]],
         "eins":         [5, [2, 4]],
         "sieben":       [5, [5, 6]],
         "drei":         [6, [1, 4]],
